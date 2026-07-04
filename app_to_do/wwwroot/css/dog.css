@@ -1,0 +1,67 @@
+﻿// Hecho por Carlos Arturo Moguel Olvera
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #f3f7fb;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.dog-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dog-card {
+    width: 500px;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 18px rgba(0, 0, 0, .15);
+    text-align: center;
+}
+
+    .dog-card h1 {
+        color: #1f7ae0;
+        margin-bottom: 10px;
+    }
+
+    .dog-card p {
+        color: #555;
+    }
+
+.dog-image {
+    width: 100%;
+    max-height: 380px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+button {
+    background: #1f7ae0;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+    button:hover {
+        background: #1665be;
+    }
+
+.dog-error {
+    background: #ffe8e8;
+    color: #a60000;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 20px 0;
+}
+
+.dog-message {
+    color: #227a22;
+    font-weight: bold;
+}

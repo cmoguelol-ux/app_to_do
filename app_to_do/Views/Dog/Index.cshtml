@@ -1,0 +1,52 @@
+﻿// Hecho por Carlos Arturo Moguel Olvera
+
+@model app_to_do.Models.DogViewModel
+
+@{
+    ViewData["Title"] = "Perrito del día";
+}
+
+<link rel="stylesheet" href="~/css/dog.css" />
+
+<div class="dog-container">
+    <div class="dog-card">
+        <h1>Perrito del día</h1>
+
+        <p>
+            Imagen recuperada desde un servicio WCF propio
+            que consume la API pública Dog CEO.
+        </p>
+
+        @if (!string.IsNullOrWhiteSpace(Model.ImagenUrl))
+        {
+            <img src="@Model.ImagenUrl"
+                 alt="Perrito del día"
+                 class="dog-image" />
+
+            <p class="dog-message">
+                @Model.Mensaje
+            </p>
+        }
+        else
+        {
+            <div class="dog-error">
+                @Model.Mensaje
+            </div>
+        }
+
+        <form asp-controller="Dog"
+              asp-action="Index"
+              method="get">
+            <button type="submit">
+                Ver otro perrito
+            </button>
+        </form>
+
+        <br />
+
+        <a asp-controller="Home"
+           asp-action="Index">
+            Regresar al inicio
+        </a>
+    </div>
+</div>
