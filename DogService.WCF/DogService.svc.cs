@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Net;
-using System.Text.RegularExpressions;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace DogService.WCF
 {
@@ -10,42 +10,30 @@ namespace DogService.WCF
         {
             try
             {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-                string url = "https://dog.ceo/api/breeds/image/random";
-
-                using (WebClient client = new WebClient())
+                using (var client = new HttpClient())
                 {
-                    client.Headers.Add("User-Agent", "Mozilla/5.0");
+                    string url = "https://dog.ceo/api/breeds/image/random";
+                    string json = client.GetStringAsync(url).Result;
 
-                    string json = client.DownloadString(url);
-
-                    Match match = Regex.Match(
+                    var response = JsonSerializer.Deserialize<DogApiResponse>(
                         json,
-                        "\"message\"\\s*:\\s*\"([^\"]+)\"",
-                        RegexOptions.IgnoreCase
-                    );
+                        new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
 
-                    if (!match.Success)
-                    {
-                        return ObtenerImagenDeRespaldo();
-                    }
+                    if (response == null || response.status != "success")
+                        return string.Empty;
 
-                    string imagenUrl = match.Groups[1].Value;
-                    imagenUrl = imagenUrl.Replace("\\/", "/");
-
-                    return imagenUrl;
+                    return response.message;
                 }
             }
             catch
             {
-                return ObtenerImagenDeRespaldo();
+                return string.Empty;
             }
         }
 
-        private string ObtenerImagenDeRespaldo()
-        {
-            return "https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg";
-        }
     }
 }
+
